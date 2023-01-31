@@ -1,28 +1,20 @@
-<div className="easyui-layout" data-options="fit:true" style="width:100%;height:100%;">
+<div class="easyui-layout" data-options="fit:true" style="width:100%;height:100%;">
 	<div data-options="region:'center'" style="padding:3px;border:0px;">
-		<div id="" className="dialog" style="width:100%;padding:0px;">
-			<span id="dialog-torrent-attribute-add-tracker-tip" className="tip"></span>
+		<div id="" class="dialog" style="width:100%;padding:0px;">
+			<span id="dialog-torrent-attribute-add-tracker-tip" class="tip"></span>
 			<div id="source" style="margin: 5px 0;"></div>
 			<span id="sync-tip" style="display: none;"></span>
-			<textarea id="txtTrackers" style="width:99%;height:120px;margin-top: 5px;"></textarea>
+			<textarea id="txtTrackers" style="width:99%;height:120px;"></textarea>
 		</div>
 	</div>
 	<div data-options="region:'south',border:false" style="text-align:right;padding:6px;">
 		<span id="text-nochange" style="display:none;"></span>
-		<a id="torrent-attribute-add-tracker-button-sync" className="easyui-linkbutton"
-		   data-options="iconCls:'icon-search',plain:true" href="javascript:void(0);">Sync Trackers</a>
-		<a id="torrent-attribute-add-tracker-button-get" className="easyui-linkbutton"
-		   data-options="iconCls:'icon-search',plain:true" href="javascript:void(0);">Get Trackers</a>
-		<a id="torrent-attribute-add-tracker-button-search-best-ip" className="easyui-linkbutton"
-		   data-options="iconCls:'icon-search',plain:true" href="javascript:void(0);" style="display: none">Best
-			Trackers</a>
-		<a id="torrent-attribute-add-tracker-button-search-all-ip" className="easyui-linkbutton"
-		   data-options="iconCls:'icon-search',plain:true" href="javascript:void(0);" style="display: none">All
-			Trackers</a>
-		<a id="torrent-attribute-add-tracker-button-ok" className="easyui-linkbutton"
-		   data-options="iconCls:'icon-ok',plain:true" href="javascript:void(0);">Ok</a>
-		<a id="torrent-attribute-add-tracker-button-cancel" className="easyui-linkbutton"
-		   data-options="iconCls:'icon-cancel',plain:true"
+		<a id="torrent-attribute-add-tracker-button-sync" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" href="javascript:void(0);">Sync Trackers</a>
+		<a id="torrent-attribute-add-tracker-button-get" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" href="javascript:void(0);">Get Trackers</a>
+<!--		<a id="torrent-attribute-add-tracker-button-search-best-ip" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" href="javascript:void(0);">Best Trackers</a>-->
+<!--		<a id="torrent-attribute-add-tracker-button-search-all-ip" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true" href="javascript:void(0);">All Trackers</a>-->
+		<a id="torrent-attribute-add-tracker-button-ok" class="easyui-linkbutton" data-options="iconCls:'icon-ok',plain:true" href="javascript:void(0);">Ok</a>
+		<a id="torrent-attribute-add-tracker-button-cancel" class="easyui-linkbutton" data-options="iconCls:'icon-cancel',plain:true"
 		   href="javascript:void(0);">Cancel</a>
 	</div>
 </div>
@@ -141,49 +133,50 @@
 		}
 		sourceHtml += '</table>'
 		$('#source').html(sourceHtml)
-		var title = "tip".split(",")
-		var torrent = transmission.torrents.all[system.currentTorrentId]
+
+		var title = "tip".split(",");
+		var torrent = transmission.torrents.all[system.currentTorrentId];
 
 		$.each(title, function (i, item) {
 			thisDialog.find("#dialog-torrent-attribute-add-tracker-" + item).html(system.lang.dialog[
-					"torrent-attribute-add-tracker"][item])
-		})
+				"torrent-attribute-add-tracker"][item]);
+		});
 
 		thisDialog.find(".title").css({
 			background: "#e6e6e6"
-		})
+		});
 
-		title = "button-sync,button-get,button-search-best-ip,button-search-all-ip,button-ok,button-cancel".split(",")
+		title = "button-sync,button-get,button-search-best-ip,button-search-all-ip,button-ok,button-cancel".split(",");
 		$.each(title, function (i, item) {
-			thisDialog.find("#torrent-attribute-add-tracker-" + item).html(system.lang.dialog["public"][item])
+			thisDialog.find("#torrent-attribute-add-tracker-" + item).html(system.lang.dialog["public"][item]);
 			thisDialog.find("#torrent-attribute-add-tracker-" + item).html(system.lang.dialog[
-					"torrent-attribute-add-tracker"][item])
-		})
+				"torrent-attribute-add-tracker"][item]);
+		});
 
-		thisDialog.find("#text-nochange").html(system.lang["public"]["text-nochange"])
+		thisDialog.find("#text-nochange").html(system.lang["public"]["text-nochange"]);
 
 		// 确认
 		thisDialog.find("#torrent-attribute-add-tracker-button-ok").click(function () {
-			var urls = thisDialog.find("#txtTrackers").val()
-			var button = $(this)
+			var urls = thisDialog.find("#txtTrackers").val();
+			var button = $(this);
 
 			if (urls != "") {
-				var newTrackers = []
-				var items = urls.split("\n")
-				$.each(items, function (index, value) {
-					if (isURL(value) && newTrackers.indexOf(value) == -1) {
-						newTrackers.push(value)
+				var newTrackers = [];
+				var items = urls.split("\n");
+				$.each(items, function(index, value) {
+					if (isURL(value) && newTrackers.indexOf(value)==-1) {
+						newTrackers.push(value);
 					}
-				})
-				if (newTrackers.length == 0) {
-					thisDialog.find("#text-nochange").html(system.lang["public"]["text-nochange"]).fadeInAndOut()
-					return
+				});
+				if (newTrackers.length==0) {
+					thisDialog.find("#text-nochange").html(system.lang["public"]["text-nochange"]).fadeInAndOut();
+					return;
 				}
-				var icon = button.linkbutton("options").iconCls
+				var icon = button.linkbutton("options").iconCls;
 				button.linkbutton({
 					disabled: true,
 					iconCls: "icon-loading"
-				})
+				});
 				transmission.exec({
 					method: "torrent-set",
 					arguments: {
@@ -194,32 +187,32 @@
 					button.linkbutton({
 						iconCls: icon,
 						disabled: false
-					})
+					});
 
 					if (data.result == "success") {
-						system.getTorrentInfos(system.currentTorrentId)
-						thisDialog.dialog("close")
+						system.getTorrentInfos(system.currentTorrentId);
+						thisDialog.dialog("close");
 					}
-				})
+				});
 			} else {
-				thisDialog.find("#text-nochange").html(system.lang["public"]["text-nochange"]).fadeInAndOut()
+				thisDialog.find("#text-nochange").html(system.lang["public"]["text-nochange"]).fadeInAndOut();
 			}
 
-		})
+		});
 
-		thisDialog.find("#torrent-attribute-add-tracker-button-search-best-ip").click(function () {
-			var trackersURL = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best_ip.txt"
-			$.get(trackersURL, function (data) {
-				$("#txtTrackers").html(data.replace(/[\r\n]+/g, "\n"))
-			})
-		})
+        thisDialog.find("#torrent-attribute-add-tracker-button-search-best-ip").click(function () {
+            var trackersURL = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_best_ip.txt"
+            $.get(trackersURL,function(data){
+                $("#txtTrackers").html(data.replace(/[\r\n]+/g,"\n"));
+            });
+        });
 
-		thisDialog.find("#torrent-attribute-add-tracker-button-search-all-ip").click(function () {
-			var trackersURL = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt"
-			$.get(trackersURL, function (data) {
-				$("#txtTrackers").html(data.replace(/[\r\n]+/g, "\n"))
-			})
-		})
+        thisDialog.find("#torrent-attribute-add-tracker-button-search-all-ip").click(function () {
+            var trackersURL="https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt"
+            $.get(trackersURL,function(data){
+                $("#txtTrackers").html(data.replace(/[\r\n]+/g,"\n"));
+            });
+        });
 
 		thisDialog.find("#torrent-attribute-add-tracker-button-get").click(function () {
 			let keys = []
@@ -240,7 +233,7 @@
 				$('#sync-tip').show();
 				$('#sync-tip').html('<span style="color: red">请先同步Tracker</span>')
 			}
-		})
+		});
 
 		thisDialog.find("#torrent-attribute-add-tracker-button-sync").click(function () {
 			let list = []
@@ -252,7 +245,7 @@
 						name: source.name,
 						value: data
 					})
-				}))
+				}));
 			}
 			$.when(...req).done(function () {
 				$('#sync-tip').show();
@@ -267,15 +260,15 @@
 					}
 				}
 				$('#txtTrackers').html(content.replace(/[\r\n]+/g, "\n"))
-			})
-		})
-
+			});
+		});
+        
 		thisDialog.find("#torrent-attribute-add-tracker-button-cancel").click(function () {
-			thisDialog.dialog("close")
-		})
+			thisDialog.dialog("close");
+		});
 
 		function isURL(v) {
-			return /^[a-zA-z]+:\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?$/.test(v)
+			return /^[a-zA-z]+:\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?$/.test(v);
 		}
-	})($("#dialog-torrent-attribute-add-tracker"))
+	})($("#dialog-torrent-attribute-add-tracker"));
 </script>
